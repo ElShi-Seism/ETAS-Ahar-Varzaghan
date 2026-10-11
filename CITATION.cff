@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this pipeline, please cite it as below."
+type: software
+title: "ETAS Analysis Pipeline for the Ahar-Varzaghan 2012 Doublet Sequence"
+authors:
+  - family-names: "Kazemi Lafmejani"
+    given-names: "Davood"
+    affiliation: "Islamic Azad University, Tehran North Branch"
+  - family-names: "Shabani"
+    given-names: "Elham"
+    affiliation: "Institute of Geophysics, University of Tehran"
+repository-code: "https://github.com/ElShi-Seism/ETAS-Ahar-Varzaghan"
+license: GPL-3.0-or-later
+version: 1.0.0
+date-released: 2026-10-10
+keywords:
+  - ETAS
+  - seismicity
+  - point process
+  - changepoint detection
+  - Ahar-Varzaghan
+  - earthquake doublet
+references:
+  - type: article
+    authors:
+      - family-names: "Jalilian"
+        given-names: "Abdollah"
+    title: "ETAS: An R Package for Fitting the Space-Time ETAS Model to Earthquake Data"
+    journal: "Journal of Statistical Software"
+    volume: 88
+    year: 2019
+    doi: "10.18637/jss.v088.c01"
+  - type: article
+    authors:
+      - family-names: "Killick"
+        given-names: "Rebecca"
+      - family-names: "Eckley"
+        given-names: "Idris A."
+    title: "changepoint: An R Package for Changepoint Analysis"
+    journal: "Journal of Statistical Software"
+    volume: 58
+    issue: 3
+    year: 2014
+    doi: "10.18637/jss.v058.i03"
