@@ -1,0 +1,34 @@
+Replicates: 179 completed, 0 failed or exploded
+Simulated target events: median 304 (5%-95%: 167-535); observed 251
+
+Parameter distribution over refitted simulated catalogs (coverage = share of replicates whose asymptotic 95% interval contains the generating value):
+ parameter estimate asymptotic_se boot_mean   boot_sd     q025    q975
+        mu 1.242739      0.149492  1.277197 0.2194011 1.063975 1.45668
+         A 0.333119      0.040527  0.308093 0.0446962 0.222065 0.39432
+         c 0.042749      0.107240  0.048784 0.0161284 0.027393 0.08795
+     alpha 1.560014      0.015946  1.578911 0.0846352 1.445449 1.74387
+         p 1.180118      0.008054  1.202775 0.0345145 1.149560 1.26355
+         D 0.008753      0.035283  0.008794 0.0008271 0.007335 0.01060
+     gamma 0.599903      0.028472  0.588548 0.0499145 0.486609 0.67158
+ coverage_asymptotic
+              0.9721
+              0.8603
+              1.0000
+              0.2458
+              0.3184
+              1.0000
+              0.6089
+
+Bootstrap-calibrated p-values (the observed statistics are recomputed from the reference fit):
+                       statistic observed p_bootstrap null_q95
+  scan LR, two-sided (minseg 20) 10.82133    0.005556  6.48837
+  scan LR, one-sided (minseg 20) 10.82133    0.005556  6.30843
+             scan LR (minseg 10) 10.82133    0.005556  6.97010
+             scan LR (minseg 25) 10.82133    0.005556  6.47229
+ max |N(tau)-tau| (early excess) 22.05930    0.044444 21.28800
+                           K-S D  0.08408    0.022222  0.06338
+                Ljung-Box lag 10 11.50668    0.311111 17.59119
+         |lag-1 autocorrelation|  0.06788    0.183333  0.12010
+                   runs test |z|  2.02793    0.050000  2.00272
+
+Branching ratio (cutoff 5.4) of the refits: mean 0.96, 95% range 0.74-1.11

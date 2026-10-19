@@ -9,7 +9,7 @@
 #
 # ----------------------------------------------------------------------------
 
-required_pkgs <- c("ETAS", "changepoint")
+required_pkgs <- c("ETAS", "changepoint", "Rcpp")  # Rcpp: only for R/etas_ownlik_cpp.R
 
 installed <- rownames(installed.packages())
 missing <- setdiff(required_pkgs, installed)

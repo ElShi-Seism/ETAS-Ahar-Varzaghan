@@ -1,0 +1,22 @@
+910
+         a        b  n25  n32  frac_lt32  Mc_maxc   b32  mmin
+0     0.00    10.00  389  131      0.663      2.6  0.81   2.5
+1    10.00   100.00  287   67      0.767      2.6  0.86   2.5
+2   100.00   217.73   91   25      0.725      2.7  1.11   2.5
+3   217.73   500.00   42    8      0.810      2.6   NaN   2.5
+4   500.00  1500.00   56   13      0.768      2.5  0.95   2.5
+5  1500.00  4490.00   45    7      0.844      2.5   NaN   2.5
+M2.5-3.2 share pre/post: 0.709 0.804 767 143
+[[np.int64(544), np.int64(223)], [np.int64(115), np.int64(28)]] SignificanceResult(statistic=np.float64(0.5939559368297914), pvalue=np.float64(0.019197292552389965))
+pre from day30 [[np.int64(205), np.int64(59)], [np.int64(115), np.int64(28)]] SignificanceResult(statistic=np.float64(0.8459837877671333), pvalue=np.float64(0.612606242306154))
+KS mags>=3.2 KstestResult(statistic=np.float64(0.202914798206278), pvalue=np.float64(0.22391140210868016), statistic_location=np.float64(3.4), statistic_sign=np.int8(1)) b pre (np.float64(0.8514080832037378), 223) b post (np.float64(0.9354034994839285), 28)
+0 0.53
+1 0.71
+5 0.77
+18 0.76
+88 0.8
+199 0.78
+2921 0.7
+2012 705 2.6 2.9
+2013 107 2.7 2.8
+2014 27 2.6 2.9
