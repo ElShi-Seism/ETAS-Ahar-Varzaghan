@@ -1,6 +1,8 @@
 # ETAS Analysis Pipeline — Ahar-Varzaghan 2012 Doublet Sequence
 
-Authors: Davood Kazemi Lafmejani (Islamic Azad University North Tehran Branch) and Elham Shabani (Institute of Geophysics, University of Tehran)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23468469.svg)](https://doi.org/10.5281/zenodo.23468469)
+
+Authors: Davood Kazemi Lafmejani (Islamic Azad University, North Tehran Branch) and Elham Shabani (Institute of Geophysics, University of Tehran)
 
 An analysis pipeline built on top of the [`ETAS`](https://cran.r-project.org/package=ETAS) R package
 (Jalilian, 2019) to model the space-time seismicity of the 11 August 2012
