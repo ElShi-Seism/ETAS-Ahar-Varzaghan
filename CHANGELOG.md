@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0] - 2026-10-22
+
+- **Fixed** `branching_ratio()` in `R/etas_helpers.R`: it used the package covariance `fit$opt$avcov`, which is in the
+  wrong scale; it now uses `16 * outer(theta, theta) * avcov`. Branching-ratio standard errors change from 0.40 to 0.42
+  (no cutoff) and from 0.17 to 0.16 (cutoff 6.5); the 95% intervals are 0.74-2.40 and 0.87-1.49.
+- Parametric bootstrap extended to **1000 replicates** (`results/bootstrap_*`): scan p = 0.0040, K-S p = 0.005,
+  early excess p = 0.055, runs test p = 0.034. Step-change bootstrap extended to 999 replicates (p = 0.0020).
+- **Added** `R/etas_window_sensitivity.R` (larger spatial windows) and `R/correlation_dimension.py`
+  (correlation dimension with a uniform-catalogue null; the earlier value 1.5 quoted elsewhere could not be reproduced:
+  the values are 1.72, 1.75 and 1.57).
+- Bootstrap repeated with a simulator magnitude cutoff of 5.0 (301 replicates): the conclusions do not change.
+- The size-matched check (replicates with 200-309 events) is documented in the README.
+
 ## [1.1.0] - 2026-10-19
 
 Bootstrap rerun with the corrected simulator (179 replicates), independent likelihood, step-change model,
@@ -82,4 +95,4 @@ changepoint 2.3, R 4.x); two runs gave identical results.
 
 ### Not implemented
 
-- Bootstrap with more than 179 replicates, and any test of the spatial kernel itself.
+- Any test of the spatial kernel itself.

@@ -5,15 +5,15 @@ title: "ETAS Analysis Pipeline for the Ahar-Varzaghan 2012 Doublet Sequence"
 authors:
   - family-names: "Kazemi Lafmejani"
     given-names: "Davood"
-    affiliation: "Islamic Azad University, North Tehran Branch"
+    affiliation: "Islamic Azad University, Tehran North Branch"
   - family-names: "Shabani"
     given-names: "Elham"
     affiliation: "Institute of Geophysics, University of Tehran"
 repository-code: "https://github.com/ElShi-Seism/ETAS-Ahar-Varzaghan"
 doi: "10.5281/zenodo.23468469"
 license: GPL-3.0-or-later
-version: 1.1.0
-date-released: 2026-10-19
+version: 1.2.0
+date-released: 2026-10-22
 keywords:
   - ETAS
   - seismicity

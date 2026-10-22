@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23468469.svg)](https://doi.org/10.5281/zenodo.23468469)
 
-Authors: Davood Kazemi Lafmejani (Islamic Azad University, North Tehran Branch) and Elham Shabani (Institute of Geophysics, University of Tehran)
+Authors: Davood Kazemi Lafmejani (Islamic Azad University, Tehran North Branch) and Elham Shabani (Institute of Geophysics, University of Tehran)
 
 An analysis pipeline built on top of the [`ETAS`](https://cran.r-project.org/package=ETAS) R package
 (Jalilian, 2019) to model the space-time seismicity of the 11 August 2012
@@ -55,7 +55,7 @@ belongs to the original authors (see [Citation](#citation)).
 | PELT false-positive rate under the null | 3.7% (2000 replicates) |
 | Early excess (max abs departure of N(tau) from tau) | 22.1 events, null 95% quantile 35.3, Monte Carlo p = 0.30 (not significant) |
 | Serial independence of the gaps (Monte Carlo) | lag-1 r = 0.068 (p = 0.27); Ljung-Box lags 5/10/20 p = 0.23/0.30/0.55; runs test p = 0.048 |
-| Branching ratio (delta method) | 1.57 +/- 0.40 without magnitude cutoff; 1.18 +/- 0.17 (95% interval 0.85-1.51) with cutoff at 6.5 |
+| Branching ratio (delta method, corrected covariance) | 1.57 +/- 0.42 (95% interval 0.74-2.40) without magnitude cutoff; 1.18 +/- 0.16 (95% interval 0.87-1.49) with cutoff at 6.5 |
 | Events after the breakpoint | 27 observed vs 44.8 expected under the stationary model (lower-tail Poisson p = 0.0029, descriptive) |
 
 Two complete runs with the same seed gave identical event counts and log-likelihood.
@@ -73,12 +73,13 @@ Rscript R/etas_parametric_bootstrap.R summarise <outdir>
 ```
 
 Run each worker only once per output directory (a worker resumes from its CSV, but two copies of the same worker
-write duplicate rows; remove duplicates by `b` before summarising). About 1 minute per replicate and core; 179 replicates are in `results/`.
-Results (95% range of the refits): mu 1.06-1.46, A 0.22-0.39, c 0.027-0.088, alpha 1.45-1.74, p 1.15-1.26,
-`D` (a standard deviation, not a variance) 0.0073-0.0106 deg, gamma 0.49-0.67. The asymptotic 95% intervals
-cover the generating value in only 25% (alpha), 32% (p) and 61% (gamma) of replicates.
-Bootstrap p-values (smallest possible 0.0056): scan statistic 0.0056, K-S 0.022, early excess 0.044,
-runs test 0.050, Ljung-Box (lag 10) 0.31. The sensitivity to the magnitude cutoff (5.4) of the simulator was not examined.
+write duplicate rows; remove duplicates by `b` before summarising). About 1 minute per replicate and core; 1000 replicates are in `results/`.
+Results (95% range of the refits, 1000 replicates): mu 1.07-1.53, A 0.21-0.39, c 0.025-0.085, alpha 1.43-1.75, p 1.14-1.28,
+`D` (a standard deviation, not a variance) 0.0073-0.0104 deg, gamma 0.50-0.68. The asymptotic 95% intervals
+cover the generating value in only 26% (alpha), 29% (p) and 59% (gamma) of replicates.
+Bootstrap p-values (smallest possible 0.001): scan statistic 0.0040, K-S 0.0050, early excess 0.055,
+runs test 0.034, Ljung-Box (lag 10) 0.29. The simulated catalogs are larger than the observed one (mean 319 target
+events against 251); among the 437 replicates with 200-309 events the scan statistic never reaches 10.82 and the early-excess p is 0.007. Sensitivity to the simulator's magnitude cutoff: with 5.0 instead of 5.4 (301 replicates, `results/bootstrap_cutoff5.0_replicates.csv`, script `R/etas_parametric_bootstrap.R` with the cutoff set by the environment variable `MMAX_FREE`, default 5.4) the p-values are scan 0.0066, K-S 0.010, early excess 0.0066, runs 0.060; cutoffs of 5.6 or higher make the fitted process critical or supercritical.
 
 ## Competing model with a step change, independent likelihood, jitter check
 
@@ -90,12 +91,24 @@ runs test 0.050, Ljung-Box (lag 10) 0.31. The sensitivity to the magnitude cutof
   D 0.0044-0.0175.
 - `R/etas_stepchange_bootstrap.R`: M1 = the ETAS intensity multiplied by a factor r after a change time chosen
   by scanning (8 parameters) against the stationary model M0. Observed LR = 27.3 (r = 0.24, break at day 219.4);
-  bootstrap null (100 replicates, whole procedure repeated) has 95% quantile 8.6 and maximum 11.9, p = 0.0099.
-  The AIC difference (25) is not informative: 81% of null replicates also have a lower AIC for M1.
+  bootstrap null (999 replicates, whole procedure repeated) has 95% quantile 10.4 and 99% quantile 13.8, p = 0.0020.
+  The AIC difference (25) is not informative: 82% of null replicates also have a lower AIC for M1.
   With all parameters free, M1 shifts A (0.33 to 0.82) and p (1.18 to 1.06), so the ETAS parameters and the step are
   not separately identified.
 - `R/etas_jitter_check.R`: roundoff = FALSE and four seeds with roundoff = TRUE (`results/jitter_check.csv`):
   248-251 target events; alpha 1.52-1.61, p 1.19-1.21, D 0.0080-0.0106, gamma 0.53-0.65, c 0.047-0.061.
+
+## Sensitivity to the spatial window and epicentre geometry
+
+`R/etas_window_sensitivity.R` refits the Gaussian-kernel model in two larger windows (`results/window_sensitivity.csv`):
+
+| Window | events | break after event | scan LR | MC p (2999, fixed parameters) | observed / expected after break | alpha | p |
+|---|---|---|---|---|---|---|---|
+| core, 38.35-38.50N, 46.5-47.0E | 251 | 224 | 10.8 | 0.024 | 27 / 44.8 | 1.56 | 1.18 |
+| 38.25-38.60N, 46.4-47.0E | 257 | 226 | 13.1 | 0.007 | 31 / 52.0 | 1.38 | 1.18 |
+| 38.0-39.0N, 46.0-47.0E | 268 | 226 | 12.7 | 0.009 | 42 / 64.6 | 1.38 | 1.17 |
+
+The bootstrap calibration was not repeated for the larger windows. `R/correlation_dimension.py` gives the correlation dimension of the 251 epicentres (1.72, 1.75 and 1.57 for 1-10, 1-8 and 2-10 km) and the null for a uniform catalogue in the same rectangle (1.86, 1.87, 1.82).
 
 ## Completeness over time (`R/completeness_check.py`, `results/completeness_check.txt`)
 
@@ -153,7 +166,7 @@ study. The points below are pitfalls that affect any similar ETAS workflow
 - A formal piecewise-vs-stationary likelihood-ratio test is skipped when the
   second segment has fewer than 50 events.
 - The Monte Carlo calibration in Step 4b holds the 7 estimated parameters fixed. The parametric
-  bootstrap (below) removes this restriction, but it uses 179 replicates (smallest p-value 0.0056),
+  bootstrap (below) removes this restriction, but it uses 1000 replicates (smallest p-value 0.001),
   tests recoverability within the Gaussian model only, and does not test the kernel itself.
 - Results depend on the catalog and on the random coordinate jitter; set
   `ROUNDOFF <- FALSE` in the script to check sensitivity to it.
@@ -192,7 +205,9 @@ expected format and data provenance.
 │   ├── own_se.R                         Hessian standard errors and profile likelihoods
 │   ├── etas_stepchange_bootstrap.R      step-change model and bootstrap-calibrated LRT
 │   ├── etas_jitter_check.R              roundoff / seed sensitivity
-│   └── completeness_check.py            magnitude distribution by period
+│   ├── completeness_check.py            magnitude distribution by period
+│   └── make_figures_{1_rates,2_export}.R, make_figures_3_plot.py   Figures 4a, 5a, 8, 9 (run in this order)
+├── figures/                             PNG files of Figures 4a, 5a, 8 and 9
 ├── results/                             CSV and text outputs quoted in the paper
 └── data/README.md
 ```
@@ -219,4 +234,3 @@ not included and is subject to its own terms.
 This pipeline is provided for research transparency and reproducibility.
 It has not been peer-reviewed as a standalone software tool. Users should
 independently verify results before relying on them for publication.
-
