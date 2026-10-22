@@ -79,9 +79,12 @@ residual_independence <- function(dtau, lags = c(5, 10, 20), n_sim = 9999, seed 
 # cutoff). With a cutoff at Mmax (width W = Mmax - Mc) the productivity is integrated
 # over the truncated Gutenberg-Richter density. Var(beta) = beta^2 / N (Aki-Utsu), and
 # beta is treated as independent of the ETAS parameters. Valid for mver = 2 only
-# (parameter order mu, A, c, alpha, p, D, gamma; the full covariance is fit$opt$avcov).
+# (parameter order mu, A, c, alpha, p, D, gamma; the covariance is corrected from fit$opt$avcov, see below).
 branching_ratio <- function(fit, mags, Mc, Mmax = max(mags), dm = 0.1) {
-  th <- fit$param; V <- fit$opt$avcov
+  th <- fit$param
+  # The package's fit$opt$avcov is inverted in scale (see README); the delta-method covariance of the
+  # estimates is 16 * theta theta' * avcov, with theta the estimates (parameters = phi^2, phi = optimiser scale).
+  V <- 16 * outer(th, th) * fit$opt$avcov
   N <- length(mags)
   b <- log10(exp(1)) / (mean(mags) - (Mc - dm / 2)); beta <- b * log(10)
   W <- Mmax - Mc

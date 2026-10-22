@@ -1,6 +1,6 @@
-Replicates: 100
+Replicates: 999
 Observed: LR_full = 27.32, LR_cond = 11.06, r = NA at tb = 219.4 (event 225)
-Bootstrap null of LR_full: median 3.99, 95% quantile 8.56, 99% 9.07; p = 0.0099
-Bootstrap null of LR_cond: 95% quantile 5.21; p = 0.0099
-Replicates with 200-320 target events: 43, p(LR_full) = 0.0227
-AIC difference observed: -25.32 (M1 better if negative); share of null replicates with a lower AIC for M1: 0.810
+Bootstrap null of LR_full: median 3.80, 95% quantile 10.43, 99% 13.81; p = 0.0020
+Bootstrap null of LR_cond: 95% quantile 5.96; p = 0.0020
+Replicates with 200-320 target events: 454, p(LR_full) = 0.0044
+AIC difference observed: -25.32 (M1 better if negative); share of null replicates with a lower AIC for M1: 0.823

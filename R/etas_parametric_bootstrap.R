@@ -11,7 +11,7 @@
 # Copyright (C) 2026  Davood Kazemi Lafmejani and Elham Shabani. GPL-3.0-or-later.
 args <- commandArgs(trailingOnly = TRUE)
 SEED <- 20250923
-MC <- 3.2; W_FREE <- 5.4 - MC     # free events: magnitudes from the Gutenberg-Richter law truncated at 5.4,
+MC <- 3.2; CUT <- as.numeric(Sys.getenv("MMAX_FREE", "5.4")); W_FREE <- CUT - MC     # free events: magnitudes from the Gutenberg-Richter law truncated at 5.4,
                                   # the largest observed magnitude other than the doublet
 here <- function(f) if (file.exists(f)) f else file.path("R", f)
 source(here("etas_helpers.R")); source(here("etas_sim_gauss.R"))
@@ -49,7 +49,7 @@ if (args[1] == "run") {
     invisible(capture.output(fit <- tryCatch(suppressWarnings(etas(sim, param0 = p0, mver = 2)), error = function(e) NULL)))
     if (!is.null(fit)) invisible(capture.output(st <- tryCatch(obs_stats(fit), error = function(e) NULL)))
     if (is.null(st)) { note("fit_failed", n_t, nrow(sim$revents)); next }
-    br <- tryCatch(branching_ratio(fit, sim$revents[sim$revents[, "flag"] == 1, "mm"] + MC, MC, Mmax = 5.4), error = function(e) NULL)
+    br <- tryCatch(branching_ratio(fit, sim$revents[sim$revents[, "flag"] == 1, "mm"] + MC, MC, Mmax = CUT), error = function(e) NULL)
     row <- data.frame(b = b, n_target = n_t, n_total = nrow(sim$revents),
                       loglik = max(fit$loglik[fit$loglik != 0]), t(fit$param),
                       t(setNames(fit$asd[fit$itr, ], paste0("se_", names(fit$param)))), t(st),
